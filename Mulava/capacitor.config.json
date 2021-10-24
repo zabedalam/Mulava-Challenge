@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "Mulava",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

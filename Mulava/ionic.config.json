@@ -1,0 +1,7 @@
+{
+  "name": "Mulava",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
