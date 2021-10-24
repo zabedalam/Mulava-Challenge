@@ -16,7 +16,7 @@ import "./Home.css";
 
 const Home: React.FC = () => {
   const { users, fetchState } = useContext(DataContext);
-  // console.log("users2",users)
+  // console.log("users",users)
 
   // Create a function allowing to determine the display according to the current state of data recovery
   const displayContent = () => {

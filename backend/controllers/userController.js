@@ -20,7 +20,7 @@ exports.createUser = asyncHandler(async (req, res, next) => {
  * @route /api/users
  */
 exports.getAllUsers = asyncHandler(async (req, res, next) => {
-  const allUsers = await UserDb.find({});
+  const allUsers = await UserDb.find();
   if (allUsers) {
     res.status(200).json({
       success: true,
