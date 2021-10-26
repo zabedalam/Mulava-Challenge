@@ -89,7 +89,9 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
  * @route /api/user/:id
  */
 exports.deleteUser = asyncHandler(async (req, res, next) => {
-  const existUser = await UserDb.findOne({ _id: req.params.id });
+  // const existUser = await UserDb.findOne({ _id: req.params.id });
+  const existUser = await UserDb.findOne({ email: req.params.email });
+
   if (existUser) {
     await existUser.remove();
     res.status(200).json({

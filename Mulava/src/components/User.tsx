@@ -6,10 +6,14 @@ import DeleteUserButton from "./DeleteUserButton";
 interface UserProps {
   user: IUser;
 }
-const User: FC<UserProps> = ({ user }) => (
-  <IonItem>
-    {user.email}
-    {user.id && <DeleteUserButton id={user.id} />}
-  </IonItem>
-);
+const User: FC<UserProps> = ({ user }) => {
+console.log('user',user)
+  return (
+
+    <IonItem>
+     {user.name} | {user.email} 
+      {user.email && <DeleteUserButton email={user.email} />}
+    </IonItem>
+  );
+}
 export default User;

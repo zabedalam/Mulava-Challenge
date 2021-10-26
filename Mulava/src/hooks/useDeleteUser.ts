@@ -3,7 +3,7 @@ import DataContext from "../contexts/DataContext";
 import RequestState from "../request-state";
 
 interface IDeleteUserHook {
-  deleteUser: (id: string) => void;
+  deleteUser: (email: string) => void;
   requestState: RequestState;
   errorMessage: string;
 }
@@ -19,9 +19,9 @@ const useDeleteUser = (): IDeleteUserHook => {
   // (this function waits for the request to respond before removing the new user
   // to the list of users displayed by the component in order to ensure that the list
   // users is perfectly synchronized with the state of the data on the server)
-  const deleteUser = (id: string) => {
+  const deleteUser = (email: string) => {
     setRequestState(RequestState.Pending);
-    fetch(`http://localhost:4000/api/user/${id}`, {
+    fetch(`http://localhost:4000/api/user/${email}`, {
       method: "DELETE",
     })
       .then((response) => {
@@ -39,7 +39,7 @@ const useDeleteUser = (): IDeleteUserHook => {
       })
       .then((json) => {
         setRequestState(RequestState.Success);
-        actions?.removeUser(id);
+        actions?.removeUser(email);
       })
       .catch((error) => {
         setErrorMessage(error.message);

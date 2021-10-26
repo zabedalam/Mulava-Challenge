@@ -9,27 +9,31 @@ import RequestState from "../request-state";
 const DataContainer: FC = ({ children }) => {
   const API_BASEURL = "http://localhost:4000/api/";
   const [users, setUsers] = useState<IUser[]>([]);
-  // console.log("Users1", users);
+  console.log("Users1", users);
   const [fetchState, setFetchState] = useState(RequestState.Idle);
 
   // Trigger an action only when the component is mounted in the DOM
-  useEffect(() => {
-    const fetchData = async () => {
+  useEffect(
+     () => {
       setFetchState(RequestState.Pending);
-      try {
-        const data = await fetch(`${API_BASEURL}/users`);
-        const json = await data.json();
-        const store = [];
-        store.push(json);
-        setUsers(store);
-        setFetchState(RequestState.Success);
-        // console.log("store",store)
-      } catch (error) {
-        setFetchState(RequestState.Failed);
-      }
-    };
-    fetchData();
-  }, []);
+      fetch(`${API_BASEURL}/users`)
+      .then(
+        response => {
+          if (!response.ok) {
+            throw new Error('Error while fetching users.');
+          }
+          return response.json();
+        }
+      )
+        .then( (json:any) => {
+        setUsers(json.data as IUser[]);
+        setFetchState(RequestState.Success)
+      })
+      .catch( error => setFetchState(RequestState.Failed) );
+    },
+    [API_BASEURL]
+  );
+
 
   // Create a function allowing to add a new user in the list
   const addUser = (user: IUser) => {
@@ -37,8 +41,8 @@ const DataContainer: FC = ({ children }) => {
   };
 
   // Create a function allowing to remove a user from the list
-  const removeUser = (id: string) => {
-    setUsers(users.filter((user: any) => user.id !== id));
+  const removeUser = (email: string) => {
+    setUsers(users.filter((user: any) => user.email !== email));
   };
 
   // Compile all the content to pass to the rest of the application through the context

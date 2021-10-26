@@ -7,7 +7,7 @@ export interface DataContextValue {
   fetchState: RequestState;
   actions?: {
     addUser: (user: IUser) => void;
-    removeUser: (id: string) => void;
+    removeUser: (email: string) => void;
   };
 }
 

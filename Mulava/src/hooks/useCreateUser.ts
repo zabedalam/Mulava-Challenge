@@ -6,11 +6,13 @@ import RequestState from "../request-state";
 interface ICreateUserHook {
   createUser: (user: IUser) => void;
   requestState: RequestState;
+  errorMessage: string;
 }
 
 const useCreateUser = (): ICreateUserHook => {
   const { actions } = useContext(DataContext);
   const [requestState, setRequestState] = useState(RequestState.Idle);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Create a function allowing you to create a new user on the server
   // (this function waits for the request to respond before adding the new user
@@ -29,12 +31,18 @@ const useCreateUser = (): ICreateUserHook => {
       .then((json: IUser) => {
         setRequestState(RequestState.Success);
         actions?.addUser(json);
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+        setRequestState(RequestState.Failed);
+        console.error(error);
       });
   };
 
   return {
     createUser,
     requestState,
+    errorMessage,
   };
 };
 

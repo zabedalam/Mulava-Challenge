@@ -1,10 +1,11 @@
 import React, { FC, useState } from "react";
-import { IonItem, IonLabel, IonInput, IonButton } from "@ionic/react";
+import { IonItem, IonLabel, IonInput, IonButton, IonToast } from "@ionic/react";
 import { useCreateUser } from "../hooks";
+import RequestState from "../request-state";
 
 const AddUserInfoForm: FC = () => {
   // Generate a function used to create a new user
-  const { createUser } = useCreateUser();
+  const { createUser, requestState, errorMessage } = useCreateUser();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
@@ -38,6 +39,10 @@ const AddUserInfoForm: FC = () => {
       <IonButton expand="block" onClick={handleClick}>
         Add User
       </IonButton>
+
+      {requestState === RequestState.Failed && (
+        <IonToast isOpen={true} message={errorMessage} duration={3000} />
+      )}
     </>
   );
 };

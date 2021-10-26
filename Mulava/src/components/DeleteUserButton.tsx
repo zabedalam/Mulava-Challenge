@@ -4,15 +4,15 @@ import { useDeleteUser } from "../hooks";
 import RequestState from "../request-state";
 
 interface DeleteUserButtonProps {
-  id: string;
+  email: string;
 }
 
-const DeleteUserButton: FC<DeleteUserButtonProps> = ({ id }) => {
+const DeleteUserButton: FC<DeleteUserButtonProps> = ({ email }) => {
   const { deleteUser, requestState, errorMessage } = useDeleteUser();
 
   return (
     <>
-      <IonButton slot="end" color="danger" onClick={() => deleteUser(id)}>
+      <IonButton slot="end" color="danger" onClick={() => deleteUser(email)}>
         Delete
       </IonButton>
 
